@@ -183,13 +183,6 @@ Open a terminal inside the container (via noVNC browser or SSH) and run:
 
 ---
 
-## 💡 About Selkies vs. noVNC
-
-- **noVNC** was selected here because it is lightweight, requires no dedicated GPU or WebRTC TURN/STUN infrastructure, and connects reliably across all browsers with responsive remote scaling.
-- If high-framerate 60 FPS video or 3D GPU pass-through is needed later, the supervisor setup can be swapped with Selkies-GStreamer.
-
----
-
 ## 🛑 Stopping and Restarting
 
 - **Stop container**:
