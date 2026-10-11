@@ -1,0 +1,12 @@
+# Environment secrets
+.env
+
+# Mounted container runtime directories
+workspace/*
+!workspace/.gitkeep
+projects/*
+!projects/.gitkeep
+
+# macOS & OS artifacts
+.DS_Store
+Thumbs.db

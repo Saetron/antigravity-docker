@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Google Chrome
+GenericName=Web Browser
+Comment=Access the Internet
+Exec=google-chrome %U
+Icon=google-chrome
+Terminal=false
+Categories=Network;WebBrowser;
+StartupNotify=true

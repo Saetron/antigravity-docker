@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Antigravity CLI
+GenericName=AI Agent Platform
+Comment=Launch Google Antigravity Agent CLI
+Exec=xfce4-terminal --title="Antigravity CLI" --working-directory=/workspace -e "bash -c 'agy; exec bash'"
+Icon=utilities-terminal
+Terminal=false
+Categories=Development;IDE;
+StartupNotify=true

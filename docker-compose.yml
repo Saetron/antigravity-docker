@@ -1,0 +1,45 @@
+services:
+  antigravity-remote:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: antigravity-remote:latest
+    container_name: antigravity-remote
+    restart: unless-stopped
+    ports:
+      # noVNC WebUI (Access via http://localhost:8080 in your browser)
+      - "${WEB_PORT:-8080}:8080"
+      # Direct VNC client access (e.g. TigerVNC, RealVNC)
+      - "${VNC_PORT:-5900}:5900"
+      # SSH access (ssh -p 2222 antigravity@localhost)
+      - "${SSH_PORT:-2222}:22"
+    environment:
+      # Desktop Resolution (e.g., 1920x1080x24 or 2560x1440x24)
+      - RESOLUTION=${RESOLUTION:-1920x1080x24}
+      # Password for the 'antigravity' Linux user (for sudo and SSH)
+      - USER_PASSWORD=${USER_PASSWORD:-antigravity}
+      # Optional VNC password (leave blank for passwordless browser login)
+      - VNC_PASSWORD=${VNC_PASSWORD:-}
+      # Antigravity Remote Auto-launch configuration
+      - AUTORUN_ANTIGRAVITY_REMOTE=${AUTORUN_ANTIGRAVITY_REMOTE:-true}
+      - AUTORUN_DESKTOP_TERMINAL=${AUTORUN_DESKTOP_TERMINAL:-true}
+      - ANTIGRAVITY_INSTANCE_NAME=${ANTIGRAVITY_INSTANCE_NAME:-antigravity-docker}
+      - EXTRA_AGY_ARGS=${EXTRA_AGY_ARGS:-}
+
+    volumes:
+      # Host folder mounted to container workspace
+      - ./workspace:/workspace
+      # Dedicated project data mountpoint (override with PROJECT_DATA_PATH in .env)
+      - ${PROJECT_DATA_PATH:-./projects}:/projects
+      # Persistent home directory for dotfiles, git configs, and auth tokens
+      - antigravity_home:/home/antigravity
+
+    # Sufficient shared memory for Google Chrome & GUI rendering
+    shm_size: "2gb"
+    # Security options needed for Chrome sandboxing inside Docker (optional if wrapper has --no-sandbox)
+    security_opt:
+      - seccomp:unconfined
+
+volumes:
+  antigravity_home:
+    name: antigravity_home_data
