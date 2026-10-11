@@ -1,0 +1,9 @@
+services:
+  antigravity-remote:
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu, compute, utility, graphics, video, display]

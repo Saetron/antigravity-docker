@@ -25,6 +25,10 @@ services:
       - AUTORUN_DESKTOP_TERMINAL=${AUTORUN_DESKTOP_TERMINAL:-true}
       - ANTIGRAVITY_INSTANCE_NAME=${ANTIGRAVITY_INSTANCE_NAME:-antigravity-docker}
       - EXTRA_AGY_ARGS=${EXTRA_AGY_ARGS:-}
+      # NVIDIA GPU environment configuration (for GPU-enabled hosts)
+      - NVIDIA_VISIBLE_DEVICES=${NVIDIA_VISIBLE_DEVICES:-all}
+      - NVIDIA_DRIVER_CAPABILITIES=${NVIDIA_DRIVER_CAPABILITIES:-all}
+
 
     volumes:
       # Host folder mounted to container workspace

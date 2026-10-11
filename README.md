@@ -18,8 +18,10 @@ A lightweight, containerized Linux desktop development environment equipped with
 - **Remote Access Options**:
   - **noVNC WebUI**: `http://localhost:8080`
   - **SSH Server**: `ssh -p 2222 antigravity@localhost`
+- **NVIDIA GPU Acceleration**: Hardware acceleration and CUDA support for machine learning, PyTorch, and graphics rendering using NVIDIA Container Toolkit.
 - **Dedicated Project Mount**: Mount your local project code directory to `/projects` inside the container (accessible on the Desktop and in `/workspace/projects`).
 - **Persistent Storage**: Mapped `./workspace` and `./projects` folders, plus a persistent Docker volume for `/home/antigravity` (preserving dotfiles, shell history, auth credentials, and configs).
+
 
 
 ---
@@ -114,7 +116,70 @@ Edit `.env` or set environment variables in `docker-compose.yml`:
 | `AUTORUN_DESKTOP_TERMINAL` | `true` | Automatically open an interactive Antigravity terminal inside the desktop GUI |
 | `ANTIGRAVITY_INSTANCE_NAME` | `antigravity-docker` | Name/ID registered for this instance in remote dashboard |
 | `EXTRA_AGY_ARGS` | *(empty)* | Additional flags for `agy remote-control serve` (e.g. `--dangerously-skip-permissions`) |
+| `NVIDIA_VISIBLE_DEVICES` | `all` | GPU devices to expose to the container (e.g. `all`, `0`, `0,1`) |
+| `NVIDIA_DRIVER_CAPABILITIES` | `all` | Driver capabilities to mount (`compute,utility,graphics,video,display`) |
 
+
+---
+
+## 🎮 NVIDIA GPU Acceleration
+
+This container includes OpenGL libraries (`mesa-utils`, `libgl1`, `libegl1`) and NVIDIA Container Toolkit hooks to enable GPU acceleration, CUDA computing, and graphics rendering.
+
+### Prerequisites (Host Machine)
+1. **NVIDIA Driver** installed on the host system.
+2. **NVIDIA Container Toolkit** installed and configured for Docker:
+   ```bash
+   # On Ubuntu/Debian host:
+   sudo apt-get install -y nvidia-container-toolkit
+   sudo nvidia-ctk runtime configure --runtime=docker
+   sudo systemctl restart docker
+   ```
+
+### Launching with GPU Support
+
+#### Option A: Using the GPU compose override file (Recommended)
+```bash
+docker compose -f docker-compose.yml -f docker-compose.gpu.yml up -d --build
+```
+
+#### Option B: Always enable GPU for `docker compose up`
+Create a persistent `docker-compose.override.yml`:
+```bash
+cp docker-compose.gpu.yml docker-compose.override.yml
+docker compose up -d
+```
+
+#### Option C: Using standard `docker run`
+```bash
+docker run -d \
+  --name antigravity-remote \
+  --gpus all \
+  --shm-size 2gb \
+  -p 8080:8080 \
+  -p 2222:22 \
+  -v $(pwd)/workspace:/workspace \
+  -v $(pwd)/projects:/projects \
+  antigravity-remote:latest
+```
+
+### Verifying GPU Inside the Container
+
+Open a terminal inside the container (via noVNC browser or SSH) and run:
+
+1. **Check NVIDIA driver and GPU visibility**:
+   ```bash
+   nvidia-smi
+   ```
+2. **Verify OpenGL Hardware Acceleration**:
+   ```bash
+   glxinfo | grep -i "OpenGL renderer"
+   ```
+3. **Test with PyTorch / CUDA (Python)**:
+   ```bash
+   pip install torch
+   python3 -c "import torch; print('CUDA Available:', torch.cuda.is_available()); print('Device:', torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'None')"
+   ```
 
 ---
 
@@ -139,3 +204,4 @@ Edit `.env` or set environment variables in `docker-compose.yml`:
   ```bash
   docker compose down -v
   ```
+

@@ -11,6 +11,9 @@ ENV LC_ALL=en_US.UTF-8
 ENV DISPLAY=:1
 ENV RESOLUTION=1920x1080x24
 ENV PIP_BREAK_SYSTEM_PACKAGES=1
+# NVIDIA Container Toolkit flags
+ENV NVIDIA_VISIBLE_DEVICES=all
+ENV NVIDIA_DRIVER_CAPABILITIES=all
 
 # 1. Install base utilities, X11, XFCE desktop, noVNC, and OpenSSH
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -41,6 +44,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     fonts-dejavu-core \
     fonts-noto-color-emoji \
     libnotify4 \
+    # Hardware Acceleration & OpenGL (GPU)
+    mesa-utils \
+    libgl1-mesa-dri \
+    libgl1 \
+    libegl1 \
+    pciutils \
     # Web VNC
     novnc \
     websockify \
