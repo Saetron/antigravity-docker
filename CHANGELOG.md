@@ -15,6 +15,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated `AGENTS.md` with guidelines requiring AI agents to maintain and update the changelog on every notable change.
 - Added License & Changelog reference section and version link in `README.md`.
 
+### Changed
+- Updated CI/CD workflow dependencies (`.github/workflows/docker-build.yml`) via Dependabot:
+  - Bumped `actions/checkout` from `v4` to `v7` ([#6](https://github.com/Saetron/antigravity-docker/pull/6)).
+  - Bumped `docker/setup-qemu-action` from `v3` to `v4` ([#5](https://github.com/Saetron/antigravity-docker/pull/5)).
+  - Bumped `docker/setup-buildx-action` from `v3` to `v4` ([#4](https://github.com/Saetron/antigravity-docker/pull/4)).
+  - Bumped `docker/login-action` from `v3` to `v4` ([#2](https://github.com/Saetron/antigravity-docker/pull/2)).
+  - Bumped `docker/metadata-action` from `v5` to `v6` ([#3](https://github.com/Saetron/antigravity-docker/pull/3)).
+  - Bumped `docker/build-push-action` from `v5` to `v7` ([#1](https://github.com/Saetron/antigravity-docker/pull/1)).
+
 ---
 
 ## [1.1.0] - 2026-10-21
