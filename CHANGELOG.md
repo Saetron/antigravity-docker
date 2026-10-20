@@ -9,26 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+---
+
+## [1.1.0] - 2026-10-21
+
 ### Added
-- Created Dependabot configuration (`.github/dependabot.yml`) for automated weekly updates to GitHub Actions and Docker base images.
-- Created `CHANGELOG.md` adhering to Keep a Changelog specifications.
-- Updated `AGENTS.md` with guidelines requiring AI agents to maintain and update the changelog on every notable change.
-- Added License & Changelog reference section and version link in `README.md`.
+- **Dependabot**: Added automated weekly configuration (`.github/dependabot.yml`) for GitHub Actions and Docker base image updates.
+- **Project Changelog**: Added `CHANGELOG.md` adhering to Keep a Changelog and Semantic Versioning standards.
+- **Agent Guidelines**: Updated `AGENTS.md` with explicit rules requiring AI agents to update `CHANGELOG.md` on every change.
+- **Documentation**: Added License and Changelog links to `README.md`.
 
 ### Changed
-- Updated CI/CD workflow dependencies (`.github/workflows/docker-build.yml`) via Dependabot:
+- **CI/CD Workflow Actions**: Upgraded GitHub Actions in `.github/workflows/docker-build.yml` via Dependabot:
   - Bumped `actions/checkout` from `v4` to `v7` ([#6](https://github.com/Saetron/antigravity-docker/pull/6)).
   - Bumped `docker/setup-qemu-action` from `v3` to `v4` ([#5](https://github.com/Saetron/antigravity-docker/pull/5)).
   - Bumped `docker/setup-buildx-action` from `v3` to `v4` ([#4](https://github.com/Saetron/antigravity-docker/pull/4)).
   - Bumped `docker/login-action` from `v3` to `v4` ([#2](https://github.com/Saetron/antigravity-docker/pull/2)).
   - Bumped `docker/metadata-action` from `v5` to `v6` ([#3](https://github.com/Saetron/antigravity-docker/pull/3)).
   - Bumped `docker/build-push-action` from `v5` to `v7` ([#1](https://github.com/Saetron/antigravity-docker/pull/1)).
-
----
-
-## [1.1.0] - 2026-10-21
-
-### Changed
 - **Dockerfile & Caching**: Optimized Dockerfile layer caching order, consolidated package installation steps, and refined ignore rules (`.dockerignore`).
 - **Container Lifecycle Scripts**: Refactored and hardened container lifecycle scripts (`entrypoint.sh`, `install-chrome.sh`, `install-antigravity.sh`, and `run-antigravity-remote.sh`) with stricter error handling (`set -euo pipefail`) and permission validation.
 - **Supervisor Configuration**: Optimized process priority and logging settings for background daemons.
