@@ -31,6 +31,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Container Lifecycle Scripts**: Refactored and hardened container lifecycle scripts (`entrypoint.sh`, `install-chrome.sh`, `install-antigravity.sh`, and `run-antigravity-remote.sh`) with stricter error handling (`set -euo pipefail`) and permission validation.
 - **Supervisor Configuration**: Optimized process priority and logging settings for background daemons.
 
+### Fixed
+- **Supervisord Environment Variable Expansion**: Fixed `ENV_X11VNC_AUTH` and `ENV_RESOLUTION` expansion error in `scripts/entrypoint.sh` where variables were exported with a redundant `ENV_` prefix (causing Supervisord to register them as `ENV_ENV_X11VNC_AUTH` and `ENV_ENV_RESOLUTION`).
+
 ---
 
 ## [1.0.0] - 2026-10-12

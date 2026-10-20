@@ -96,9 +96,9 @@ if [ ! -x "/usr/local/bin/agy" ]; then
     /opt/scripts/install-antigravity.sh || true
 fi
 
-# Export variables for supervisord
-export ENV_RESOLUTION="$RESOLUTION"
-export ENV_X11VNC_AUTH="$X11VNC_AUTH"
+# Export variables for supervisord (supervisord prefixes environment variables with ENV_)
+export RESOLUTION
+export X11VNC_AUTH
 
 echo "[✓] Environment ready. Starting services..."
 exec /usr/bin/supervisord -n -c /etc/supervisor/conf.d/supervisord.conf
