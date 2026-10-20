@@ -77,38 +77,32 @@ RUN mkdir -p -m 755 /etc/apt/keyrings \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# 3. Create non-root developer user with sudo privileges
+# 3. Create non-root developer user with sudo privileges & configure global pip
 RUN groupadd -g 1000 antigravity \
     && useradd -u 1000 -g antigravity -m -s /bin/bash antigravity \
     && echo "antigravity ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/antigravity \
-    && chmod 0440 /etc/sudoers.d/antigravity
+    && chmod 0440 /etc/sudoers.d/antigravity \
+    && printf "[global]\nbreak-system-packages = true\n" > /etc/pip.conf \
+    && mkdir -p /workspace /projects \
+    && chown -R antigravity:antigravity /workspace /projects
 
-# Configure global pip behavior
-RUN mkdir -p /etc && cat <<EOF > /etc/pip.conf
-[global]
-break-system-packages = true
-EOF
+# 4. Copy and run build-time installers first to maximize Docker layer cache reuse
+COPY --chmod=0755 scripts/install-chrome.sh scripts/install-antigravity.sh /opt/scripts/
+RUN /opt/scripts/install-chrome.sh \
+    && (/opt/scripts/install-antigravity.sh || true)
 
-# Copy helper scripts, supervisor configs, and desktop entries
-COPY scripts/ /opt/scripts/
+# 5. Copy runtime scripts, supervisor configs, and desktop entries
+COPY --chmod=0755 scripts/entrypoint.sh scripts/run-antigravity-remote.sh /opt/scripts/
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY assets/ /opt/assets/
-
-RUN chmod +x /opt/scripts/*.sh
-
-# 4. Install Google Chrome / Chromium
-RUN /opt/scripts/install-chrome.sh
-
-# 5. Install Google Antigravity CLI
-RUN /opt/scripts/install-antigravity.sh || true
-
-# Prepare default workspace and projects directories
-RUN mkdir -p /workspace /projects && chown -R antigravity:antigravity /workspace /projects
 
 # WebUI (noVNC), VNC RFB, and SSH ports
 EXPOSE 8080 5900 22
 
+HEALTHCHECK --interval=30s --timeout=5s --start-period=15s --retries=3 \
+    CMD curl -fs http://localhost:8080/ >/dev/null || exit 1
+
 WORKDIR /workspace
 
-
 ENTRYPOINT ["/opt/scripts/entrypoint.sh"]
+

@@ -1,6 +1,16 @@
 .git
+.github
 .gitignore
+.dockerignore
 .env
+.env.*
+.DS_Store
+Thumbs.db
 workspace/
 projects/
+docker-compose*.yml
 README.md
+AGENTS.md
+LICENSE
+VERSION
+
