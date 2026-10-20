@@ -1,4 +1,4 @@
-# Antigravity Remote Desktop Container (`v1.1.0`)
+# Antigravity Remote Desktop Container ([`v1.1.0`](CHANGELOG.md))
 
 A lightweight, containerized Linux desktop development environment equipped with **Google Chrome**, **Antigravity CLI (`agy`)**, **GitHub CLI (`gh`)**, **Git**, **Python 3**, and an in-browser **noVNC WebUI**.
 
@@ -197,4 +197,11 @@ Open a terminal inside the container (via noVNC browser or SSH) and run:
   ```bash
   docker compose down -v
   ```
+
+---
+
+## 📄 License & Changelog
+
+- **License**: Released under the European Union Public Licence (EUPL-1.2) - see [LICENSE](LICENSE) for details.
+- **Changelog**: All notable changes, releases, and migration notes are recorded in [CHANGELOG.md](CHANGELOG.md).
 

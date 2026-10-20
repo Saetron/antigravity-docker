@@ -20,7 +20,12 @@ This repository provides a containerized, lightweight Linux workstation configur
 
 ```
 ├── VERSION                     # Container release version (1.1.0)
+├── CHANGELOG.md                # Project changelog following Keep a Changelog format
 ├── Dockerfile                  # Multi-architecture container image definition
+├── .github/                    # GitHub configurations and CI workflows
+│   ├── dependabot.yml          # Dependabot configuration for Actions and Docker
+│   └── workflows/
+│       └── docker-build.yml    # Image build and publish workflow
 ├── docker-compose.yml          # Core service definition and volume mappings
 ├── docker-compose.gpu.yml      # NVIDIA GPU device reservation override
 ├── .env.example                # Template of environment variables
@@ -113,3 +118,5 @@ docker compose exec antigravity-remote python3 -c "import torch; print(torch.cud
    - User configs and dotfiles reside in `/home/antigravity` (persisted via the `antigravity_home` named volume).
 3. **Browser Sandboxing**: Google Chrome and Chromium must run with `--no-sandbox` and `--disable-dev-shm-usage` inside the container unless run with privileged user namespaces. Always maintain the wrapper scripts in `/usr/local/bin/google-chrome`.
 4. **Shell Scripting**: All scripts in `scripts/` must be executable (`chmod +x`) and include strict error handling (`set -e` or `set -euo pipefail`).
+5. **Changelog Maintenance**: Always update `CHANGELOG.md` whenever making code, script, configuration, or documentation changes. Record changes under the `## [Unreleased]` section following the [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format (categories: `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, `Security`). When bumping `VERSION`, move unreleased changes into a new version release section with the current date.
+
