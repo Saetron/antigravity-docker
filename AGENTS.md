@@ -19,6 +19,7 @@ This repository provides a containerized, lightweight Linux workstation configur
 ## 📁 Repository Structure
 
 ```
+├── VERSION                     # Container release version (1.1.0)
 ├── Dockerfile                  # Multi-architecture container image definition
 ├── docker-compose.yml          # Core service definition and volume mappings
 ├── docker-compose.gpu.yml      # NVIDIA GPU device reservation override

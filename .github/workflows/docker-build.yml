@@ -8,7 +8,7 @@ on:
         description: "Image tag"
         required: true
         type: string
-        default: "latest"
+        default: "1.1.0"
 
 jobs:
   build-and-push:
@@ -50,7 +50,10 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
+          build-args: |
+            VERSION=${{ inputs.image_tag }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+

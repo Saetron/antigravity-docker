@@ -1,4 +1,4 @@
-# Antigravity Remote Desktop Container
+# Antigravity Remote Desktop Container (`v1.1.0`)
 
 A lightweight, containerized Linux desktop development environment equipped with **Google Chrome**, **Antigravity CLI (`agy`)**, **GitHub CLI (`gh`)**, **Git**, **Python 3**, and an in-browser **noVNC WebUI**.
 

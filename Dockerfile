@@ -1,19 +1,26 @@
 # syntax=docker/dockerfile:1
 FROM debian:bookworm-slim
 
-LABEL maintainer="Antigravity Container"
-LABEL description="Lightweight Linux desktop with Google Chrome, Antigravity CLI, GitHub CLI, Python, and noVNC WebUI"
+ARG VERSION=1.1.0
+
+LABEL maintainer="Antigravity Container" \
+      description="Lightweight Linux desktop with Google Chrome, Antigravity CLI, GitHub CLI, Python, and noVNC WebUI" \
+      org.opencontainers.image.title="Antigravity Remote Desktop Container" \
+      org.opencontainers.image.description="Lightweight Linux desktop with Google Chrome, Antigravity CLI, GitHub CLI, Python, and noVNC WebUI" \
+      org.opencontainers.image.version="${VERSION}" \
+      org.opencontainers.image.licenses="EUPL-1.2"
 
 # Prevent interactive prompts during apt install
-ENV DEBIAN_FRONTEND=noninteractive
-ENV LANG=en_US.UTF-8
-ENV LC_ALL=en_US.UTF-8
-ENV DISPLAY=:1
-ENV RESOLUTION=1920x1080x24
-ENV PIP_BREAK_SYSTEM_PACKAGES=1
-# NVIDIA Container Toolkit flags
-ENV NVIDIA_VISIBLE_DEVICES=all
-ENV NVIDIA_DRIVER_CAPABILITIES=all
+ENV CONTAINER_VERSION=${VERSION} \
+    DEBIAN_FRONTEND=noninteractive \
+    LANG=en_US.UTF-8 \
+    LC_ALL=en_US.UTF-8 \
+    DISPLAY=:1 \
+    RESOLUTION=1920x1080x24 \
+    PIP_BREAK_SYSTEM_PACKAGES=1 \
+    NVIDIA_VISIBLE_DEVICES=all \
+    NVIDIA_DRIVER_CAPABILITIES=all
+
 
 # 1. Install base utilities, X11, XFCE desktop, noVNC, and OpenSSH
 RUN apt-get update && apt-get install -y --no-install-recommends \

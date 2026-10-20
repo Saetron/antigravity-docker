@@ -8,9 +8,10 @@ VNC_PASSWORD="${VNC_PASSWORD:-}"
 AUTORUN_DESKTOP_TERMINAL="${AUTORUN_DESKTOP_TERMINAL:-true}"
 
 echo "=========================================="
-echo " Starting Antigravity Development Desktop "
+echo " Antigravity Desktop Container v${CONTAINER_VERSION:-1.1.0}"
 echo "=========================================="
 echo "Display Resolution: $RESOLUTION"
+
 
 # Clean up stale X11 and supervisor locks from previous container runs
 rm -f /tmp/.X1-lock /tmp/.X11-unix/X1 /var/run/supervisord.pid /var/run/supervisor.sock
